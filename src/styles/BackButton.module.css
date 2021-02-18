@@ -1,0 +1,37 @@
+@import "./global.css";
+
+.container {
+  cursor: pointer;
+  display: flex;
+  color: var(--icon);
+  align-items: center;
+}
+.icon {
+  height: 36px;
+  width: 36px;
+}
+
+.text {
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.hover path {
+  fill: var(--primary_hover);
+}
+
+.hover {
+  color: var(--primary_hover);
+}
+
+@media (min-width: 768px) {
+  .icon {
+    height: 48px;
+    width: 48px;
+  }
+  .text {
+    font-size: 32px;
+    margin-left: 12px;
+  }
+}

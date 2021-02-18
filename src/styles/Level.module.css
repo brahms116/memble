@@ -1,0 +1,74 @@
+@import "./global.css";
+
+.level {
+  display: grid;
+  grid-template-areas: "a";
+  align-items: center;
+  justify-items: center;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.outer_circle {
+  grid-area: a;
+  background: var(--primary);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.inner_circle {
+  grid-area: a;
+  background: var(--bg);
+  border-radius: 50%;
+  height: 26px;
+  width: 26px;
+}
+
+.text {
+  grid-area: a;
+  color: var(--primary);
+  font-size: 12px;
+}
+
+.outer_circle.display {
+  height: 80px;
+  width: 80px;
+}
+
+.text.display {
+  font-size: 36px;
+}
+
+.innner_circle.display {
+  height: 68px;
+  width: 68px;
+}
+
+@media (min-width: 768px) {
+  .outer_circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .inner_circle {
+    height: 42px;
+    width: 42px;
+  }
+
+  .text {
+    font-size: 20px;
+  }
+  .text.display {
+    font-size: 78px;
+  }
+
+  .outer_circle.display {
+    height: 170px;
+    width: 170px;
+  }
+  .inner_circle.display {
+    height: 138px;
+    width: 138px;
+  }
+}

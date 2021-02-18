@@ -1,0 +1,81 @@
+@import "./global.css";
+
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.container {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  color: var(--primary);
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 26px;
+}
+
+.verse {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+.status {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 103px;
+}
+
+.status.scholar {
+  color: var(--scholar);
+}
+
+.status.challenger {
+  color: var(--challenger);
+}
+
+.sd {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.md {
+  width: 100%;
+  margin-bottom: 20px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .md {
+    display: block;
+  }
+  .sd {
+    display: none;
+  }
+  .container {
+    width: 450px;
+  }
+  .title {
+    font-size: 44px;
+    margin-bottom: 33px;
+  }
+  .verse {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  .status {
+    font-size: 24px;
+    margin-bottom: 190px;
+  }
+}

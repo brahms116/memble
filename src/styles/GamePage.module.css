@@ -1,0 +1,66 @@
+@import "./global.css";
+
+.page {
+  box-sizing: border-box;
+  padding: 128px 32px 60px 32px;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.text {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.md {
+  display: none;
+}
+.click {
+  width: 88px;
+  transform: translateX(-50%);
+  cursor: text;
+}
+.textbox {
+  font-size: 18px;
+  position: absolute;
+  left: -100vw;
+}
+.button {
+  position: fixed;
+  box-shadow: var(--shadow);
+  top: 80vh;
+  left: 50vw;
+  transform: translateX(-50%);
+  border-radius: 200px;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.7);
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+}
+
+@media (max-width: 350px) {
+  .button {
+    top: 70vh;
+  }
+}
+
+@media (min-width: 768px) {
+  .sd {
+    display: none;
+  }
+  .md {
+    display: block;
+  }
+  .page {
+    padding: 207px 77px 60px 77px;
+  }
+}

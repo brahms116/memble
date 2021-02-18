@@ -1,0 +1,38 @@
+@import "./global.css";
+
+.box {
+  cursor: pointer;
+  border-style: solid;
+  border-color: var(--text);
+  color: var(--text);
+  border-width: 1px;
+  border-radius: 12px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.box:hover:not(.disabled) {
+  border-color: var(--primary_hover);
+  color: var(--primary_hover);
+}
+
+.box.disabled {
+  cursor: default;
+  border-color: var(--icon);
+  color: var(--icon);
+}
+
+@media (min-width: 768px) {
+  .box {
+    font-size: 32px;
+    border-width: 2px;
+    border-radius: 16px;
+    width: 64px;
+    height: 64px;
+  }
+}

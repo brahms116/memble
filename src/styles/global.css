@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  --primary: #6d9fff;
+  --challenger: #410caf;
+  --scholar: #bf980c;
+  --error: #d11f1f;
+  --scholar_faint: #d8c78a;
+  --challenger_faint: #a78be3;
+  --primary_hover: #99bcff;
+  --error_faint: #ff8f8f;
+  --icon: #dadada;
+  --tile_hover: #f4f4f4;
+  --card: #ffffff;
+  --text: #3c3c3c;
+  --bg: #ffffff;
+  --shadow: 0px 4px 20px rgba(0, 0, 0, 0.13);
+  font-family: "Montserrat", sans-serif;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}

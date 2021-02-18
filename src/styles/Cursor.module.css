@@ -1,0 +1,29 @@
+@import "./global.css";
+
+.cursor {
+  align-self: baseline;
+  width: 2px;
+  height: 15px;
+  background: var(--text);
+  animation: fade 0.8s linear infinite;
+}
+
+.cursor.error {
+  background: var(--error);
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (min-width: 768px) {
+  .cursor {
+    width: 3px;
+    height: 24px;
+  }
+}

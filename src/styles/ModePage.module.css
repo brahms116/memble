@@ -1,0 +1,65 @@
+@import "./global.css";
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  box-sizing: border-box;
+  max-width: 100vw;
+  grid-template:
+    ". titleA ." auto
+    ". scholarA ." auto
+    ". . ." 60px
+    ". challengerA . " auto
+    ". . ." 60px / 1fr 200px 1fr;
+}
+
+.title {
+  grid-area: titleA;
+  color: var(--primary);
+  font-weight: 700;
+  text-align: center;
+  font-size: 32px;
+  margin-top: 70px;
+  margin-bottom: 83px;
+}
+
+.option {
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  width: 200px;
+  text-align: center;
+}
+
+.details {
+  margin-top: 34px;
+  margin-bottom: 32px;
+  font-weight: 400;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.scholar {
+  grid-area: scholarA;
+  color: var(--scholar);
+}
+
+.challenger {
+  grid-area: challengerA;
+  color: var(--challenger);
+}
+
+@media (min-width: 768px) {
+  .title {
+    margin: 0;
+  }
+  .page {
+    grid-template:
+      ". . . . ." 120px
+      "titleA titleA titleA titleA titleA" auto
+      ". . . . ." 78px
+      ". scholarA . challengerA ." auto
+      ". . . . ." 1fr / 1fr 200px 168px 200px 1fr;
+  }
+}

@@ -1,0 +1,18 @@
+@import "./global.css";
+
+.icon {
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+}
+
+.hover path {
+  fill: var(--primary_hover);
+}
+
+@media (min-width: 768px) {
+  .icon {
+    height: 48px;
+    width: 48px;
+  }
+}

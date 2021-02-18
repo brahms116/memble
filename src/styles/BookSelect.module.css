@@ -1,0 +1,41 @@
+@import "./global.css";
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.text.placeholder {
+  color: var(--icon);
+}
+
+.md {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sd {
+    display: none;
+  }
+  .md {
+    display: block;
+  }
+  .container {
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+  .text {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 14px;
+  }
+}

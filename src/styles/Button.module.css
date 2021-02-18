@@ -1,0 +1,131 @@
+@import "./global.css";
+
+.button {
+  cursor: pointer;
+  font-weight: 700;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.button.disabled {
+  cursor: default;
+}
+
+.button.error:hover {
+  color: var(--bg);
+  background: var(--error_faint);
+}
+.button.primary:hover {
+  color: var(--bg);
+  background: var(--primary_hover);
+}
+.button.challenger:hover {
+  color: var(--bg);
+  background: var(--challenger_faint);
+}
+.button.scholar:hover {
+  color: var(--bg);
+  background: var(--scholar_faint);
+}
+
+.full_width {
+  width: 100%;
+}
+
+.small {
+  font-size: 12px;
+  padding: 9px 12px;
+  border-radius: 9px;
+}
+
+.medium {
+  font-size: 18px;
+  padding: 12px 22px;
+  border-radius: 12px;
+}
+
+.large {
+  font-size: 32px;
+  padding: 21px 27px;
+  border-radius: 22px;
+}
+
+.filled {
+  color: var(--bg);
+}
+
+.filled.primary {
+  background: var(--primary);
+}
+
+.filled.error {
+  background: var(--error);
+}
+
+.filled.challenger {
+  background: var(--challenger);
+}
+.filled.scholar {
+  background: var(--scholar);
+}
+.filled.disabled {
+  background: var(--icon);
+}
+
+.outlined {
+  background: none;
+  border-style: solid;
+}
+
+.outlined.primary {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.outlined.challenger {
+  border-color: var(--challenger);
+  color: var(--challenger);
+}
+.outlined.scholar {
+  border-color: var(--scholar);
+  color: var(--scholar);
+}
+
+.outlined.error {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.outlined.disabled {
+  border-color: var(--icon);
+  color: var(--icon);
+}
+
+.outlined.primary:hover {
+  border-color: var(--primary_hover);
+}
+.outlined.challenger:hover {
+  border-color: var(--challenger_faint);
+}
+
+.outlined.scholar:hover {
+  border-color: var(--scholar_faint);
+}
+
+.outlined.error:hover {
+  border-color: var(--error_faint);
+}
+
+.outlined.small {
+  border-width: 1px;
+}
+
+.outlined.medium {
+  border-width: 1.5px;
+}
+
+.outlined.large {
+  border-width: 3px;
+}

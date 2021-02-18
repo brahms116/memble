@@ -1,0 +1,46 @@
+@import "./global.css";
+
+.page {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 60px;
+}
+
+.close_button {
+  padding-left: 25px;
+  margin-top: 22px;
+  margin-bottom: 33px;
+}
+
+.title {
+  padding-left: 25px;
+
+  font-size: 32px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 46px;
+}
+
+.divider {
+  box-sizing: border-box;
+  margin: 0 25px;
+  height: 1px;
+  background: var(--icon);
+}
+
+@media (min-width: 768px) {
+  .close_button {
+    padding-left: 44px;
+    margin-top: 45px;
+    margin-bottom: 41px;
+  }
+  .title {
+    padding-left: 44px;
+    font-size: 44px;
+    margin-bottom: 74px;
+  }
+  .divider {
+    margin: 0 44px;
+  }
+}

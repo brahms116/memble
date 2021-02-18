@@ -1,0 +1,75 @@
+@import "./global.css";
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.logo_container {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  height: 196px;
+  width: 190px;
+  margin-bottom: 40px;
+}
+
+.text_container {
+  color: var(--primary);
+  font-size: 44px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+}
+
+.text {
+  margin-bottom: 40px;
+}
+.md {
+  display: none;
+}
+.sd {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .sd {
+    display: none;
+  }
+  .md {
+    display: block;
+  }
+  .page {
+    flex-direction: row;
+  }
+  .text_container {
+    flex-grow: 1;
+    width: auto;
+    font-size: 64px;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 27px;
+  }
+  .text {
+    margin-bottom: 16px;
+  }
+  .logo_container {
+    flex-grow: 1;
+    justify-content: flex-end;
+    padding-right: 27px;
+  }
+  .logo {
+    margin: none;
+    height: 261px;
+    width: 253px;
+  }
+}

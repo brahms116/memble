@@ -1,0 +1,74 @@
+@import "./global.css";
+
+.page_container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+}
+
+.back_button {
+  margin-top: 95px;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 32px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 48px;
+}
+
+.group_select_container {
+  margin-bottom: 63px;
+}
+
+.tags {
+  margin-bottom: 39px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sd {
+  margin-top: 23px;
+  width: 100%;
+}
+.md {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .page_container {
+    justify-content: flex-start;
+    padding-left: 63px;
+  }
+  .title {
+    font-size: 44px;
+  }
+  .group_select_container {
+    margin-bottom: 86px;
+  }
+  .md {
+    margin-top: 87px;
+    display: flex;
+  }
+  .sd {
+    display: none;
+  }
+  .back_button {
+    margin-top: 50px;
+    margin-bottom: 49px;
+  }
+  .tags {
+    font-size: 20px;
+    margin-bottom: 33px;
+  }
+}
