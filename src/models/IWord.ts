@@ -6,6 +6,6 @@ export default interface IWord {
 }
 
 export interface IWordUi extends IWord {
-  control: AnimationControls;
+  isVisible: boolean;
   isHint: boolean;
 }

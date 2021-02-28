@@ -7,13 +7,13 @@ const dummyWords = [
     { value: "beginning,", verseNumber: 1 },
   ],
   [
-    { value: "god", verseNumber: 2 },
-    { value: "created", verseNumber: 2 },
-    { value: "the", verseNumber: 2 },
-    { value: "heavens", verseNumber: 2 },
-    { value: "and", verseNumber: 2 },
-    { value: "the", verseNumber: 2 },
-    { value: "earth", verseNumber: 2 },
+    { value: "god", verseNumber: 1 },
+    { value: "created", verseNumber: 1 },
+    { value: "the", verseNumber: 1 },
+    { value: "heavens", verseNumber: 1 },
+    { value: "and", verseNumber: 1 },
+    { value: "the", verseNumber: 1 },
+    { value: "earth", verseNumber: 1 },
   ],
 ] as IWord[][];
 

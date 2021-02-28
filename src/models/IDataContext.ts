@@ -8,10 +8,13 @@ export default interface IDataContext {
       currentSegmentIndex: number;
       currentProgressionScore: number;
       totalProgressionScore: number;
+      initialHintShown: boolean;
+      nextScholarSegment: number;
       words: IWord[][];
     };
   };
   events: {
     newLetter: (letter: string) => boolean;
+    shownHint: () => void;
   };
 }

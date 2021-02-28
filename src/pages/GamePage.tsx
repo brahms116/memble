@@ -10,13 +10,11 @@ import styles from "../styles/GamePage.module.css";
 export default function GamePage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isTyping, setIsTyping] = useState(false);
+  const [isAwaitingCover, setIsAwaitingCover] = useState(true);
   const coverControl = useAnimation();
+
   const appData = useContext(dataContext);
-  const gameController = GameController(appData);
-  const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.currentTarget.value);
-    appData.events.newLetter(e.currentTarget.value);
-  };
+  const gameController = GameController(appData, isAwaitingCover);
 
   const focusOnInput = () => {
     inputRef?.current?.focus();
@@ -30,10 +28,11 @@ export default function GamePage() {
 
   const handleCoverButtonClick = async () => {
     focusOnInput();
+    setIsAwaitingCover(false);
     await coverControl.start({
       opacity: 0,
     });
-    await coverControl.start({
+    coverControl.set({
       display: "none",
     });
   };
@@ -59,7 +58,12 @@ export default function GamePage() {
 
   return (
     <Page>
-      <motion.div initial={{ opacity: 1 }}>
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={
+          gameController.state.isAnimating ? { opacity: 0 } : { opacity: 1 }
+        }
+      >
         <TopBar />
       </motion.div>
       <div className={styles.page}>
@@ -74,30 +78,33 @@ export default function GamePage() {
             }}
           ></div>
         </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isTyping ? { opacity: 0 } : { opacity: 1 }}
-        >
-          <div className={styles.button + ` ${styles.md}`}>
-            <Button
-              onClick={resumeTyping}
-              label="resume typing"
-              variant="large"
-              colorVariant="primary"
-            />
-          </div>
-          <div className={styles.button + ` ${styles.sd}`}>
-            <Button
-              onClick={resumeTyping}
-              label="resume typing"
-              variant="medium"
-              colorVariant="primary"
-            />
-          </div>
-        </motion.div>
+        {!gameController.state.isAnimating && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isTyping ? { opacity: 0 } : { opacity: 1 }}
+          >
+            <div className={styles.button + ` ${styles.md}`}>
+              <Button
+                onClick={resumeTyping}
+                label="resume typing"
+                variant="large"
+                colorVariant="primary"
+              />
+            </div>
+            <div className={styles.button + ` ${styles.sd}`}>
+              <Button
+                onClick={resumeTyping}
+                label="resume typing"
+                variant="medium"
+                colorVariant="primary"
+              />
+            </div>
+          </motion.div>
+        )}
       </div>
+
       <input
-        onChange={handleTextInput}
+        onChange={gameController.events.newLetter}
         type="text"
         className={styles.textbox}
         value=""

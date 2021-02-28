@@ -3,11 +3,15 @@
 .cursor {
   align-self: baseline;
   width: 2px;
-  height: 15px;
   background: var(--text);
   animation: fade 0.8s linear infinite;
 }
-
+.cursor.visible {
+  height: 15px;
+}
+.curosr.invisible {
+  height: 0px;
+}
 .cursor.error {
   background: var(--error);
 }
@@ -24,6 +28,9 @@
 @media (min-width: 768px) {
   .cursor {
     width: 3px;
+  }
+
+  .cursor.visible {
     height: 24px;
   }
 }

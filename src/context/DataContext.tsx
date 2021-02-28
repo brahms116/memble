@@ -10,15 +10,18 @@ export default function DataContextProvider(props: {
   const gameStore = GameStore();
 
   const newLetter = (letter: string) => {
-    console.log(letter);
     return gameStore.events.newLetter(letter);
+  };
+
+  const shownHint = () => {
+    gameStore.events.shownHint();
   };
   return (
     <dataContext.Provider
       value={
         {
           state: { game: { ...gameStore.state } },
-          events: { newLetter },
+          events: { newLetter, shownHint },
         } as IDataContext
       }
     >

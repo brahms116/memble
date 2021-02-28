@@ -15,17 +15,17 @@ export default function WordUIElements(props: { words: IWordUi[] }) {
           <React.Fragment key={i}>
             <VerseMarker
               verseNumber={word.verseNumber}
-              controller={word.control}
+              isVisible={word.isVisible}
             />
             <Word
-              controller={word.control}
+              isVisible={word.isVisible}
               word={word.value}
               isHint={word.isHint}
             />
           </React.Fragment>
         ) : (
           <Word
-            controller={word.control}
+            isVisible={word.isVisible}
             word={word.value}
             isHint={word.isHint}
             key={`d${i}`}
