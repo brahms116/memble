@@ -7,6 +7,7 @@ import IWord, { IWordUi } from "../models/IWord";
 import IDataContext from "../models/IDataContext";
 import animateWords from "../utils/animateWordUtils";
 import Sleep from "../utils/Sleep";
+import { useHistory } from "react-router-dom";
 
 export default function GameController(
   appData: IDataContext,
@@ -17,7 +18,7 @@ export default function GameController(
   const [words, setWords] = useState<IWordUi[]>([]);
   const [isCursorError, setCursorError] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
-
+  const history = useHistory();
   const elements = (
     <React.Fragment>
       <WordUIElements words={words} />
@@ -32,6 +33,30 @@ export default function GameController(
   );
   const updateCursorActive = (state: boolean) => {
     setIsCursorActive(state);
+  };
+  const displayChallengerHint = async () => {
+    setIsAnimating(true);
+    setWords([]);
+    let arr: IWordUi[] = [];
+    arr.push({
+      value: appData.state.game.words[0][0].value,
+      isHint: true,
+      verseNumber: appData.state.game.words[0][0].verseNumber,
+      isVisible: false,
+    });
+    arr.push({
+      value: appData.state.game.words[0][1].value,
+      isHint: true,
+      verseNumber: appData.state.game.words[0][1].verseNumber,
+      isVisible: false,
+    });
+    setWords(arr);
+    await Sleep(700);
+    await animateWords.showWords(setWords, 0, 2, 200);
+    await animateWords.hideWords(setWords, 1, 2, 200);
+    setWords([]);
+    setIsAnimating(false);
+    appData.events.shownChallengerHint();
   };
 
   const displayScholarHint = async (
@@ -74,7 +99,7 @@ export default function GameController(
       return [...prev];
     });
     setIsAnimating(false);
-    appData.events.shownHint();
+    appData.events.shownScholarHint();
   };
 
   const clearBoard = async (semgmentIndex: number) => {
@@ -105,6 +130,7 @@ export default function GameController(
     await animateWords.hideWords(setWords, 1, 2, 200);
     setWords([]);
     setIsAnimating(false);
+    appData.events.boardCleared();
   };
   const displayWords = (segmentIndex: number, wordIndex: number) => {
     let result: IWordUi[] = [];
@@ -122,38 +148,69 @@ export default function GameController(
     }
     return result;
   };
-
   useEffect(() => {
-    if (
-      appData.state.game.currentSegmentIndex === 0 &&
-      appData.state.game.currentWordIndex === 0 &&
-      appData.state.game.nextScholarSegment > 0
-    ) {
-      clearBoard(appData.state.game.nextScholarSegment - 1);
-    } else {
-      setWords(
-        displayWords(
-          appData.state.game.currentSegmentIndex,
-          appData.state.game.currentWordIndex
-        )
-      );
-      if (!isAwaitingCover) {
-        if (
-          !appData.state.game.initialHintShown &&
-          appData.state.game.currentWordIndex === 0 &&
-          appData.state.game.currentSegmentIndex ===
-            appData.state.game.nextScholarSegment
-        )
-          displayScholarHint(
+    return () => {
+      appData.events.boardCleared();
+      //challenger hint here so that scholar segement doesn't move up?
+      // appData.events.shownChallengerHint();
+    };
+  }, []);
+  useEffect(() => {
+    if (appData.state.game.isGameFinished) {
+      history.push("/finish");
+    }
+  }, [appData.state.game.isGameFinished]);
+  useEffect(() => {
+    //If it is scholar mode
+    if (appData.state.gameSettings.gameMode === "scholar") {
+      if (
+        !appData.state.game.isBoardCleared &&
+        appData.state.game.currentSegmentIndex === 0 &&
+        appData.state.game.currentWordIndex === 0 &&
+        appData.state.game.nextScholarSegment > 0
+      ) {
+        clearBoard(appData.state.game.nextScholarSegment - 1);
+      } else {
+        setWords(
+          displayWords(
             appData.state.game.currentSegmentIndex,
             appData.state.game.currentWordIndex
+          )
+        );
+        if (!isAwaitingCover) {
+          if (
+            !appData.state.game.initialHintShown &&
+            appData.state.game.currentWordIndex === 0 &&
+            appData.state.game.currentSegmentIndex ===
+              appData.state.game.nextScholarSegment
+          )
+            displayScholarHint(
+              appData.state.game.currentSegmentIndex,
+              appData.state.game.currentWordIndex
+            );
+        }
+      }
+    }
+    // if it is challenger
+    else {
+      if (!isAwaitingCover) {
+        if (!appData.state.game.initialHintShown) {
+          displayChallengerHint();
+        } else {
+          setWords(
+            displayWords(
+              appData.state.game.currentSegmentIndex,
+              appData.state.game.currentWordIndex
+            )
           );
+        }
       }
     }
   }, [
     appData.state.game.currentSegmentIndex,
     appData.state.game.currentWordIndex,
     appData.state.game.initialHintShown,
+    appData.state.game.isBoardCleared,
     isAwaitingCover,
   ]);
 

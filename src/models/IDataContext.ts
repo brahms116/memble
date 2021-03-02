@@ -11,10 +11,35 @@ export default interface IDataContext {
       initialHintShown: boolean;
       nextScholarSegment: number;
       words: IWord[][];
+      isBoardCleared: boolean;
+      isGameFinished: boolean;
+    };
+    navigation: {
+      selectionStage: number;
+      fromTextSelectStage: number;
+      toTextSelectStage: number;
+    };
+    gameSettings: {
+      lengthMode: string;
+      gameMode: string;
+      fromBook: number;
+      fromChapter: number;
+      fromVerse: number;
+      toBook: number;
+      toChapter: number;
+      toVerse: number;
     };
   };
   events: {
     newLetter: (letter: string) => boolean;
-    shownHint: () => void;
+    shownScholarHint: () => void;
+    shownChallengerHint: () => void;
+    selectLengthMode: (mode: string) => void;
+    confirmTextSelect: () => void;
+    selectGameMode: (mode: string) => void;
+    boardCleared: () => void;
+    quit: () => void;
+    pickAnotherVerse: () => void;
+    recite: () => void;
   };
 }

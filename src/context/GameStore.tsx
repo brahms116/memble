@@ -10,10 +10,28 @@ export default function GameStore() {
   const [totalProgressionScore, setTotalProgressionScore] = useState(0);
   const [nextScholarSegment, setNextScholarSegment] = useState(0);
   const [initialHintShown, setInitialHintShown] = useState(false);
+  const [isBoardCleared, setIsBoardCleared] = useState(false);
   const [words, setWords] = useState<IWord[][]>(dummyWords);
   const [hasRepeated, setHasRepeated] = useState(false);
-
-  const newLetter = (letter: string) => {
+  const [isGameFinished, setIsGameFinished] = useState(false);
+  const resetAll = () => {
+    setInputValue("");
+    setCurrentWordIndex(0);
+    setCurrentSegmentIndex(0);
+    setCurrentProgressionScore(0);
+    setTotalProgressionScore(0);
+    setNextScholarSegment(0);
+    setInitialHintShown(false);
+    setIsBoardCleared(false);
+    setHasRepeated(false);
+    setIsGameFinished(false);
+  };
+  const newLetter = (letter: string, mode: string) => {
+    const resObject = {
+      isLetterCorrect: true,
+      pointsEarned: 0,
+      isFinished: false,
+    };
     if (/^[a-zA-Z]$/.test(letter)) {
       const wordResult = words[currentSegmentIndex][
         currentWordIndex
@@ -21,10 +39,10 @@ export default function GameStore() {
       const inputResult = inputValue.match(/[a-zA-Z]/g);
       if (wordResult) {
         let length = inputResult ? inputResult.length : 0;
+        //if the letter is correct
         if (letter.toLowerCase() === wordResult[length]) {
-          //if the letter is correct
+          // if it is not the last letter
           if (length < wordResult.length - 1) {
-            // if it is not the last letter
             setInputValue((x) => x + letter);
             if (
               new RegExp(`${letter}'${wordResult[length + 1]}`, "g").test(
@@ -33,45 +51,63 @@ export default function GameStore() {
             ) {
               setInputValue((x) => x + "'");
             }
-          } else {
             // it is the last letter
+          } else {
+            //if it is the last word of the segment
             if (currentWordIndex === words[currentSegmentIndex].length - 1) {
-              //if it is the last word of the segment
-              if (currentSegmentIndex + 1 === nextScholarSegment) {
-                if (hasRepeated) {
-                  setInitialHintShown(false);
-                  setCurrentSegmentIndex((prev) => prev + 1);
-                  setHasRepeated(false);
+              // if it is scholar mode
+              if (mode === "scholar") {
+                if (currentSegmentIndex + 1 === nextScholarSegment) {
+                  if (hasRepeated) {
+                    if (currentSegmentIndex === words.length - 1) {
+                      resObject.isFinished = true;
+                    } else {
+                      setInitialHintShown(false);
+                      setCurrentSegmentIndex((prev) => prev + 1);
+                      setHasRepeated(false);
+                    }
+                  } else {
+                    let length = 0;
+                    for (let i = 0; i < currentSegmentIndex + 1; i++) {
+                      length += words[i].length;
+                    }
+                    resObject.pointsEarned = length;
+                    setCurrentSegmentIndex(0);
+                    setIsBoardCleared(false);
+                    setHasRepeated(true);
+                  }
                 } else {
-                  setCurrentSegmentIndex(0);
-                  setHasRepeated(true);
+                  setCurrentSegmentIndex((prev) => prev + 1);
                 }
-              } else {
-                setCurrentSegmentIndex((prev) => prev + 1);
+                setCurrentWordIndex(0);
               }
-              setCurrentWordIndex(0);
-            } else {
+              //challenger mode
+              else {
+                if (currentSegmentIndex === words.length - 1) {
+                  resObject.isFinished = true;
+                } else {
+                  setCurrentWordIndex(0);
+                  setCurrentSegmentIndex((prev) => prev + 1);
+                }
+              }
               // not the last word of the segment
+            } else {
               setCurrentWordIndex((prev) => prev + 1);
             }
             setInputValue("");
           }
-        } else {
           //the letter isn't correct
-          return false;
+        } else {
+          resObject.isLetterCorrect = false;
+          return resObject;
         }
       }
     }
-    return true;
+    return resObject;
   };
 
   const shownHint = () => {
     setInitialHintShown(true);
-    setNextScholarSegment(nextScholarSegment + 1);
-  };
-  const newSegmentComplete = () => {
-    setCurrentSegmentIndex(0);
-    setCurrentWordIndex(0);
   };
   return {
     state: {
@@ -83,10 +119,16 @@ export default function GameStore() {
       words,
       nextScholarSegment,
       initialHintShown,
+      isBoardCleared,
+      isGameFinished,
     },
     events: {
       newLetter,
       shownHint,
+      setIsBoardCleared,
+      setNextScholarSegment,
+      setIsGameFinished,
+      resetAll,
     },
   };
 }

@@ -1,5 +1,6 @@
 import { useSpring } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { dataContext } from "../context/DataContext";
 import styles from "../styles/Word.module.css";
 
 export interface WordProps {
@@ -14,7 +15,7 @@ export default function Word(props: WordProps) {
   const [opacity, setOpacity] = useState(props.isVisible ? 1 : 0);
   const opacityMotion = useSpring(props.isVisible ? 1 : 0);
   const [display, setDisplay] = useState(props.isVisible ? "block" : "none");
-
+  const appData = useContext(dataContext);
   useEffect(() => {
     opacityMotion.set(props.isVisible ? 1 : 0);
   }, [props.isVisible]);
@@ -32,7 +33,10 @@ export default function Word(props: WordProps) {
       update();
     };
   }, []);
-
+  const styleName =
+    appData.state.gameSettings.gameMode === "scholar"
+      ? styles.scholar
+      : styles.challenger;
   return (
     <div
       style={{
@@ -41,7 +45,7 @@ export default function Word(props: WordProps) {
       }}
       className={
         styles.word +
-        ` ${props.isHint ? styles.scholar : ""}` +
+        ` ${props.isHint ? styleName : ""}` +
         ` ${props.isInput ? styles.input : ""}`
       }
       ref={myref}

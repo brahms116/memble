@@ -1,11 +1,20 @@
 import styles from "../styles/LengthPage.module.css";
 import { ReactComponent as Single } from "../media/SingleVerse.svg";
 import { ReactComponent as Passage } from "../media/Passage.svg";
-import React from "react";
+import React, { useContext } from "react";
 import Page from "../components/Page";
 import Button from "../components/Button";
+import { useHistory } from "react-router-dom";
+import { dataContext } from "../context/DataContext";
 
 export default function LengthPage() {
+  const history = useHistory();
+  const appData = useContext(dataContext);
+  const selectLength = (mode: "passage" | "verse") => {
+    appData.events.selectLengthMode(mode);
+    history.push("/text");
+  };
+
   return (
     <Page>
       <div className={styles.page}>
@@ -15,7 +24,9 @@ export default function LengthPage() {
           <Single className={styles.illustration}></Single>
           <Button
             label="memorise"
-            onClick={() => {}}
+            onClick={() => {
+              selectLength("verse");
+            }}
             variant="small"
             colorVariant="primary"
           ></Button>
@@ -25,7 +36,9 @@ export default function LengthPage() {
           <Passage className={styles.illustration}></Passage>
           <Button
             label="memorise"
-            onClick={() => {}}
+            onClick={() => {
+              selectLength("passage");
+            }}
             variant="small"
             colorVariant="primary"
           ></Button>

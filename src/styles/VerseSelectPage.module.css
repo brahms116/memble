@@ -15,7 +15,7 @@
 }
 
 .back_button {
-  margin-top: 95px;
+  margin-top: 45px;
   margin-bottom: 48px;
 }
 
@@ -40,12 +40,16 @@
 .sd {
   margin-top: 23px;
   width: 100%;
+  margin-bottom: 30px;
 }
 .md {
   display: none;
 }
 
 @media (min-width: 768px) {
+  .back_button {
+    margin-top: 95px;
+  }
   .page_container {
     justify-content: flex-start;
     padding-left: 63px;

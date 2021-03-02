@@ -27,9 +27,7 @@ const animateWords = {
   ) => {
     for (let i = 0; i < length; i++) {
       setWordUI((prev) => {
-        console.log(prev);
         prev[startIndex - i].isVisible = false;
-
         return [...prev];
       });
       await Sleep(duration);

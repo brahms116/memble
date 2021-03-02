@@ -3,7 +3,9 @@ import styles from "../styles/LandingPage.module.css";
 import { ReactComponent as Logo } from "../media/Logo.svg";
 import React from "react";
 import Button from "../components/Button";
+import { useHistory } from "react-router-dom";
 export default function LandingPage() {
+  const history = useHistory();
   return (
     <Page>
       <div className={styles.page}>
@@ -14,7 +16,9 @@ export default function LandingPage() {
           <div className={styles.text}>MEMBLE</div>
           <div className={styles.sd}>
             <Button
-              onClick={() => {}}
+              onClick={() => {
+                history.push("/length");
+              }}
               variant="medium"
               fullWidth
               label="play"
@@ -23,7 +27,9 @@ export default function LandingPage() {
           </div>
           <div className={styles.md}>
             <Button
-              onClick={() => {}}
+              onClick={() => {
+                history.push("/length");
+              }}
               variant="medium"
               label="play"
               colorVariant="primary"
