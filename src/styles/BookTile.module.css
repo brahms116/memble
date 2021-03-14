@@ -6,7 +6,7 @@
   font-size: 18px;
   cursor: pointer;
 }
-.title.disabled {
+.tile.disabled {
   cursor: default;
   color: var(--icon);
 }
@@ -14,7 +14,7 @@
   background: var(--tile_hover);
 }
 
-.title.disabled:hover {
+.tile.disabled:hover {
   background: none;
 }
 

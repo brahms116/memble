@@ -128,6 +128,7 @@ export default function GameStore() {
       setIsBoardCleared,
       setNextScholarSegment,
       setIsGameFinished,
+      setWords,
       resetAll,
     },
   };

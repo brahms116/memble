@@ -18,6 +18,7 @@ export default interface IDataContext {
       selectionStage: number;
       fromTextSelectStage: number;
       toTextSelectStage: number;
+      currentTextSelect: number;
     };
     gameSettings: {
       lengthMode: string;
@@ -35,11 +36,15 @@ export default interface IDataContext {
     shownScholarHint: () => void;
     shownChallengerHint: () => void;
     selectLengthMode: (mode: string) => void;
-    confirmTextSelect: () => void;
+    confirmTextSelect: () => Promise<boolean>;
     selectGameMode: (mode: string) => void;
     boardCleared: () => void;
     quit: () => void;
     pickAnotherVerse: () => void;
     recite: () => void;
+    toPickText: (currentTextSelect: number) => void;
+    pickBook: (id: number) => void;
+    pickChapter: (id: number) => void;
+    pickVerse: (id: number) => void;
   };
 }

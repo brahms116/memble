@@ -9,14 +9,15 @@ export default function NavigationStore() {
   // 4 -- Game finished
   const [selectionStage, setSelectionStage] = useState(0);
   const [fromTextSelectStage, setFromTextSelectStage] = useState(0);
-  const [toTextSelectStage, setToTextSelectStage] = useState(0);
+  const [toTextSelectStage, setToTextSelectStage] = useState(-1);
+  const [currentTextSelect, setCurrentTextSelect] = useState(0);
   const changeStage = (stage: number) => {
     setSelectionStage(stage);
     return stage;
   };
   const resetTextSelect = () => {
     setFromTextSelectStage(0);
-    setToTextSelectStage(0);
+    setToTextSelectStage(-1);
     return {
       selectionStage,
       fromTextSelectStage,
@@ -37,11 +38,15 @@ export default function NavigationStore() {
       selectionStage,
       fromTextSelectStage,
       toTextSelectStage,
+      currentTextSelect,
     },
     events: {
       changeStage,
       resetTextSelect,
       resetAll,
+      setCurrentTextSelect,
+      setToTextSelectStage,
+      setFromTextSelectStage,
     },
   };
 }
