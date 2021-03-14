@@ -32,6 +32,7 @@ export default function GameStore() {
       pointsEarned: 0,
       isFinished: false,
     };
+
     if (/^[a-zA-Z]$/.test(letter)) {
       const wordResult = words[currentSegmentIndex][
         currentWordIndex
@@ -40,7 +41,7 @@ export default function GameStore() {
       if (wordResult) {
         let length = inputResult ? inputResult.length : 0;
         //if the letter is correct
-        if (letter.toLowerCase() === wordResult[length]) {
+        if (letter.toLowerCase() === wordResult[length].toLowerCase()) {
           // if it is not the last letter
           if (length < wordResult.length - 1) {
             setInputValue((x) => x + letter);

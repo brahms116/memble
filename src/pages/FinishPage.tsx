@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import Button from "../components/Button";
 import Page from "../components/Page";
 import { dataContext } from "../context/DataContext";
+import bible from "../models/IBook";
 import styles from "../styles/FinishPage.module.css";
 
 export default function FinishPage() {
@@ -21,7 +22,15 @@ export default function FinishPage() {
       <div className={styles.page}>
         <div className={styles.container}>
           <div className={styles.title}>WELL DONE!</div>
-          <div className={styles.verse}>GEN 1:1-13</div>
+          <div className={styles.verse}>{`${
+            bible[appData.state.gameSettings.fromBook].name
+          } ${appData.state.gameSettings.fromChapter + 1}:${
+            appData.state.gameSettings.fromVerse + 1
+          }${
+            appData.state.gameSettings.lengthMode === "passage"
+              ? `-${appData.state.gameSettings.toVerse + 1}`
+              : ""
+          }`}</div>
           <div
             className={
               styles.status +
@@ -74,6 +83,7 @@ export default function FinishPage() {
                 label="RECITE"
                 fullWidth
                 variant="large"
+                disabled
               />
             </div>
           )}

@@ -65,7 +65,9 @@ export default function DataContextProvider(props: {
     }
     const jsonResult = await result.json();
     const passage: string = jsonResult.passages[0];
-    convertToSegments(passage);
+    const wordsArr = convertToSegments(passage);
+    // console.log(wordsArr);
+    gameStore.events.setWords(wordsArr);
     return true;
   };
   const selectGameMode = (mode: string) => {
