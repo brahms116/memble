@@ -46,10 +46,13 @@ export default function GamePage() {
   };
 
   useEffect(() => {
-    const rect = gameController.state.cursorRef.current?.getBoundingClientRect();
-    if (inputRef.current && rect) {
-      inputRef.current.style.top = `${window.scrollY + rect.top}px`;
-    }
+    // const rect = gameController.state.cursorRef.current?.getBoundingClientRect();
+    // if (inputRef.current && rect) {
+    //   inputRef.current.style.top = `${window.scrollY + rect.top}px`;
+    //   console.log("here");
+    // }
+    if (gameController.state.isAnimating || isTyping)
+      window.scrollTo({ top: document.body.scrollHeight });
   });
 
   useEffect(() => {

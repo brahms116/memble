@@ -83,7 +83,6 @@ export default function FinishPage() {
                 label="RECITE"
                 fullWidth
                 variant="large"
-                disabled
               />
             </div>
           )}

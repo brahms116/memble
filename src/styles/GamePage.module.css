@@ -3,7 +3,6 @@
 .page {
   box-sizing: border-box;
   padding: 128px 32px 60px 32px;
-  height: 100vh;
   overflow-x: hidden;
 }
 
@@ -22,8 +21,9 @@
 }
 .textbox {
   font-size: 18px;
-  position: absolute;
-  left: -100vw;
+  position: fixed;
+  left: 0vw;
+  top: 200vh;
 }
 .button {
   position: fixed;

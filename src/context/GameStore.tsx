@@ -55,6 +55,7 @@ export default function GameStore() {
             // it is the last letter
           } else {
             //if it is the last word of the segment
+            setCurrentProgressionScore((v) => v + 1);
             if (currentWordIndex === words[currentSegmentIndex].length - 1) {
               // if it is scholar mode
               if (mode === "scholar") {
@@ -130,6 +131,7 @@ export default function GameStore() {
       setNextScholarSegment,
       setIsGameFinished,
       setWords,
+      setTotalProgressionScore,
       resetAll,
     },
   };

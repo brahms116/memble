@@ -9,7 +9,6 @@ import PageLoader from "../components/PageLoader";
 import { dataContext } from "../context/DataContext";
 import styles from "../styles/VerseSelectPage.module.css";
 import framerUtils from "../utils/framerUtils";
-import Sleep from "../utils/Sleep";
 
 export default function VerseSelectPage() {
   const history = useHistory();

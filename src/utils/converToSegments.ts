@@ -24,13 +24,22 @@ export default function convertToSegments(passage: string) {
     for (const verse of formattedVerses) {
       const segments = verse.verse.match(/.+?([,.;—]|$)/g)!;
       for (const segment of segments) {
-        const segmentArr: IWord[] = [];
+        const segmentArr: IWord[][] = [];
         const noSpace = segment.replace(/^\s+/g, "");
         const words = noSpace.split(" ");
+        let count = 0;
+        let tempArr: IWord[] = [];
         for (const word of words) {
-          segmentArr.push({ value: word, verseNumber: +verse.verseNumber });
+          if (count > 8) {
+            segmentArr.push(tempArr);
+            tempArr = [];
+            count = 0;
+          }
+          tempArr.push({ value: word, verseNumber: +verse.verseNumber });
+          count++;
         }
-        resultArr.push(segmentArr);
+        segmentArr.push(tempArr);
+        resultArr.push(...segmentArr);
       }
     }
   }

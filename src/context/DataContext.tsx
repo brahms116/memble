@@ -66,23 +66,37 @@ export default function DataContextProvider(props: {
     const jsonResult = await result.json();
     const passage: string = jsonResult.passages[0];
     const wordsArr = convertToSegments(passage);
-    // console.log(wordsArr);
     gameStore.events.setWords(wordsArr);
+
     return true;
   };
   const selectGameMode = (mode: string) => {
     navigationStore.events.changeStage(3);
     gameSettingsStore.events.setGameMode(mode);
+    let total = 0;
+    console.log(gameStore.state.words);
+    for (let i = 0; i < gameStore.state.words.length; i++) {
+      if (mode === "scholar") {
+        console.log(2 ** (gameStore.state.words.length - i));
+        total +=
+          2 ** (gameStore.state.words.length - i) *
+          gameStore.state.words[i].length;
+      } else {
+        total += gameStore.state.words[i].length;
+      }
+    }
+    gameStore.events.setTotalProgressionScore(total);
   };
   const boardCleared = () => {
     gameStore.events.setIsBoardCleared(true);
   };
   const pickAnotherVerse = () => {
     navigationStore.events.changeStage(0);
+    gameStore.events.resetAll();
   };
   const recite = () => {
-    gameSettingsStore.events.setGameMode("challenger");
-    navigationStore.events.changeStage(3);
+    gameStore.events.resetAll();
+    selectGameMode("challenger");
   };
   const quit = () => {
     gameStore.events.resetAll();
@@ -95,13 +109,13 @@ export default function DataContextProvider(props: {
     if (navigationStore.state.currentTextSelect < 3) {
       gameSettingsStore.events.setFromBook(id);
       navigationStore.events.setFromTextSelectStage(2);
-      if (
-        navigationStore.state.toTextSelectStage === -1 ||
-        gameSettingsStore.state.toBook < id
-      ) {
-        gameSettingsStore.events.setToBook(id);
-        navigationStore.events.setToTextSelectStage(1);
-      }
+      // if (
+      //   navigationStore.state.toTextSelectStage === -1 ||
+      //   gameSettingsStore.state.toBook < id
+      // ) {
+      gameSettingsStore.events.setToBook(id);
+      navigationStore.events.setToTextSelectStage(1);
+      // }
     } else {
       gameSettingsStore.events.setToBook(id);
       navigationStore.events.setToTextSelectStage(
@@ -113,19 +127,19 @@ export default function DataContextProvider(props: {
     if (navigationStore.state.currentTextSelect < 3) {
       gameSettingsStore.events.setFromChapter(id);
       navigationStore.events.setFromTextSelectStage(4);
-      if (
-        navigationStore.state.toTextSelectStage === 1 ||
-        gameSettingsStore.state.toChapter > id
-      ) {
-        if (
-          gameSettingsStore.state.toBook === gameSettingsStore.state.fromBook
-        ) {
-          gameSettingsStore.events.setToChapter(id);
-          navigationStore.events.setToTextSelectStage(3);
-        } else {
-          navigationStore.events.setToTextSelectStage(2);
-        }
-      }
+      // if (
+      //   navigationStore.state.toTextSelectStage === 1 ||
+      //   gameSettingsStore.state.toChapter > id
+      // ) {
+      //   if (
+      //     gameSettingsStore.state.toBook === gameSettingsStore.state.fromBook
+      //   ) {
+      gameSettingsStore.events.setToChapter(id);
+      navigationStore.events.setToTextSelectStage(3);
+      //   } else {
+      //     navigationStore.events.setToTextSelectStage(2);
+      //   }
+      // }
     } else {
       gameSettingsStore.events.setToChapter(id);
       navigationStore.events.setToTextSelectStage(
@@ -137,21 +151,21 @@ export default function DataContextProvider(props: {
     if (navigationStore.state.currentTextSelect < 3) {
       gameSettingsStore.events.setFromVerse(id);
       navigationStore.events.setFromTextSelectStage(5);
-      if (
-        navigationStore.state.toTextSelectStage === 3 ||
-        gameSettingsStore.state.toVerse > id
-      ) {
-        if (
-          gameSettingsStore.state.toBook === gameSettingsStore.state.fromBook &&
-          gameSettingsStore.state.toChapter ===
-            gameSettingsStore.state.fromChapter
-        ) {
-          gameSettingsStore.events.setToVerse(id);
-          navigationStore.events.setToTextSelectStage(5);
-        } else {
-          navigationStore.events.setToTextSelectStage(4);
-        }
-      }
+      // if (
+      //   navigationStore.state.toTextSelectStage === 3 ||
+      //   gameSettingsStore.state.toVerse > id
+      // ) {
+      //   if (
+      //     gameSettingsStore.state.toBook === gameSettingsStore.state.fromBook &&
+      //     gameSettingsStore.state.toChapter ===
+      //       gameSettingsStore.state.fromChapter
+      //   ) {
+      gameSettingsStore.events.setToVerse(id);
+      navigationStore.events.setToTextSelectStage(5);
+      // } else {
+      //   navigationStore.events.setToTextSelectStage(4);
+      // }
+      // }
     } else {
       gameSettingsStore.events.setToVerse(id);
       navigationStore.events.setToTextSelectStage(5);
