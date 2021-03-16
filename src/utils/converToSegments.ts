@@ -30,7 +30,7 @@ export default function convertToSegments(passage: string) {
         let count = 0;
         let tempArr: IWord[] = [];
         for (const word of words) {
-          if (count > 8) {
+          if (count > 7) {
             segmentArr.push(tempArr);
             tempArr = [];
             count = 0;

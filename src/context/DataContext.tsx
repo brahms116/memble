@@ -79,7 +79,7 @@ export default function DataContextProvider(props: {
       if (mode === "scholar") {
         console.log(2 ** (gameStore.state.words.length - i));
         total +=
-          2 ** (gameStore.state.words.length - i) *
+          (gameStore.state.words.length - i + 1) *
           gameStore.state.words[i].length;
       } else {
         total += gameStore.state.words[i].length;
