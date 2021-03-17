@@ -38,7 +38,6 @@ export default function GameStore() {
       const wordResult = words[currentSegmentIndex][
         currentWordIndex
       ].value.match(/[a-zA-Z0-9]/g);
-      console.log(wordResult);
       const inputResult = inputValue.match(/[a-zA-Z0-9]/g);
       if (wordResult) {
         let length = inputResult ? inputResult.length : 0;
