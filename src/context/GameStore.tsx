@@ -15,6 +15,7 @@ export default function GameStore() {
   const [hasRepeated, setHasRepeated] = useState(false);
   const [isGameFinished, setIsGameFinished] = useState(false);
   const resetAll = () => {
+    console.log("resetting");
     setInputValue("");
     setCurrentWordIndex(0);
     setCurrentSegmentIndex(0);

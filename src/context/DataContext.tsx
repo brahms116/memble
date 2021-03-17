@@ -22,7 +22,7 @@ export default function DataContextProvider(props: {
     );
     if (result.isFinished) {
       navigationStore.events.changeStage(4);
-      gameStore.events.resetAll();
+      // gameStore.events.resetAll();
       gameStore.events.setIsGameFinished(true);
     }
     return result.isLetterCorrect;
@@ -74,10 +74,10 @@ export default function DataContextProvider(props: {
     navigationStore.events.changeStage(3);
     gameSettingsStore.events.setGameMode(mode);
     let total = 0;
-    console.log(gameStore.state.words);
+    // console.log(gameStore.state.words);
     for (let i = 0; i < gameStore.state.words.length; i++) {
       if (mode === "scholar") {
-        console.log(2 ** (gameStore.state.words.length - i));
+        // console.log(2 ** (gameStore.state.words.length - i));
         total +=
           (gameStore.state.words.length - i + 1) *
           gameStore.state.words[i].length;
