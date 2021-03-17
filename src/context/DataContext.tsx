@@ -22,8 +22,8 @@ export default function DataContextProvider(props: {
     );
     if (result.isFinished) {
       navigationStore.events.changeStage(4);
-      // gameStore.events.resetAll();
       gameStore.events.setIsGameFinished(true);
+      //   gameStore.events.resetAll();
     }
     return result.isLetterCorrect;
   };

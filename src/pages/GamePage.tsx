@@ -52,7 +52,11 @@ export default function GamePage() {
     //   console.log("here");
     // }
     if (gameController.state.isAnimating || isTyping)
-      window.scrollTo({ top: document.body.scrollHeight });
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        window.scrollTo({ top: document.body.scrollHeight - 200 });
+      } else {
+        window.scrollTo({ top: document.body.scrollHeight });
+      }
   });
 
   useEffect(() => {

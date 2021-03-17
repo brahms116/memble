@@ -22,7 +22,6 @@ export default function GameController(
   const elements = (
     <React.Fragment>
       <WordUIElements words={words} />
-
       <Word word={appData.state.game.inputValue} isVisible isInput />
 
       <Cursor
