@@ -34,11 +34,12 @@ export default function GameStore() {
       isFinished: false,
     };
 
-    if (/^[a-zA-Z]$/.test(letter)) {
+    if (/^[a-zA-Z0-9]$/.test(letter)) {
       const wordResult = words[currentSegmentIndex][
         currentWordIndex
-      ].value.match(/[a-zA-Z]/g);
-      const inputResult = inputValue.match(/[a-zA-Z]/g);
+      ].value.match(/[a-zA-Z0-9]/g);
+      console.log(wordResult);
+      const inputResult = inputValue.match(/[a-zA-Z0-9]/g);
       if (wordResult) {
         let length = inputResult ? inputResult.length : 0;
         //if the letter is correct
