@@ -164,7 +164,7 @@ export default function GameController(
   }, []);
   useEffect(() => {
     if (appData.state.game.isGameFinished) {
-      console.log("pushing");
+      // console.log("pushing");
       history.push("/finish");
     }
   }, [appData.state.game.isGameFinished]);

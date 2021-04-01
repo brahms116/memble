@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import bible from "../models/IBook";
 import IDataContext from "../models/IDataContext";
+import IWord from "../models/IWord";
 import convertToSegments from "../utils/converToSegments";
 import GameSettingsStore from "./GameSettingsStore";
 import GameStore from "./GameStore";
@@ -38,17 +39,19 @@ export default function DataContextProvider(props: {
     navigationStore.events.changeStage(1);
     gameSettingsStore.events.setLengthMode(mode);
   };
-  const confirmTextSelect = async () => {
+  const confirmTextSelect = async (customObj?: {
+    lengthMode: string;
+    fromBook: number;
+    fromChapter: number;
+    fromVerse: number;
+    toVerse: number;
+  }) => {
+    const dataObj = customObj ? customObj : gameSettingsStore.state;
     navigationStore.events.changeStage(2);
-    const bookQuery = `${bible[gameSettingsStore.state.fromBook].name.replace(
-      " ",
-      ""
-    )}${gameSettingsStore.state.fromChapter + 1}:${
-      gameSettingsStore.state.fromVerse + 1
-    }${
-      gameSettingsStore.state.lengthMode === "verse"
-        ? ""
-        : `-${gameSettingsStore.state.toVerse + 1}`
+    const bookQuery = `${bible[dataObj.fromBook].name.replace(" ", "")}${
+      dataObj.fromChapter + 1
+    }:${dataObj.fromVerse + 1}${
+      dataObj.lengthMode === "verse" ? "" : `-${dataObj.toVerse + 1}`
     }`;
     const url = `https://api.esv.org/v3/passage/text/?q=${bookQuery}&include-passage-references=false&include-first-verse-numbers=false&include-footnotes=false&include-headings=false&include-short-copyright=false&include-selahs=false&indent-paragraphs=0&indent-poetry=false&indent-psalm-doxology=0`;
     // console.log(url);
@@ -61,28 +64,25 @@ export default function DataContextProvider(props: {
     if (!result.ok) {
       console.log("errror");
       console.log(result.blob());
-      return false;
+      return { ok: false, payload: null };
     }
     const jsonResult = await result.json();
     const passage: string = jsonResult.passages[0];
     const wordsArr = convertToSegments(passage);
     gameStore.events.setWords(wordsArr);
 
-    return true;
+    return { payload: wordsArr, ok: true };
   };
-  const selectGameMode = (mode: string) => {
+  const selectGameMode = (mode: string, arr?: IWord[][] | null) => {
     navigationStore.events.changeStage(3);
+    const wordArr = arr ? arr : gameStore.state.words;
     gameSettingsStore.events.setGameMode(mode);
     let total = 0;
-    // console.log(gameStore.state.words);
-    for (let i = 0; i < gameStore.state.words.length; i++) {
+    for (let i = 0; i < wordArr.length; i++) {
       if (mode === "scholar") {
-        // console.log(2 ** (gameStore.state.words.length - i));
-        total +=
-          (gameStore.state.words.length - i + 1) *
-          gameStore.state.words[i].length;
+        total += (wordArr.length - i + 1) * wordArr[i].length;
       } else {
-        total += gameStore.state.words[i].length;
+        total += wordArr[i].length;
       }
     }
     gameStore.events.setTotalProgressionScore(total);
@@ -171,6 +171,31 @@ export default function DataContextProvider(props: {
       navigationStore.events.setToTextSelectStage(5);
     }
   };
+
+  const fromURL = async (
+    textMode: string,
+    gameMode: string,
+    book: number,
+    chapter: number,
+    verse: number,
+    verseEnd?: number
+  ) => {
+    gameSettingsStore.events.setLengthMode(textMode);
+    gameSettingsStore.events.setFromBook(book);
+    gameSettingsStore.events.setFromChapter(chapter);
+    gameSettingsStore.events.setFromVerse(verse);
+    gameSettingsStore.events.setToVerse(verseEnd ? verseEnd : 0);
+    const result = await confirmTextSelect({
+      lengthMode: textMode,
+      fromBook: book,
+      fromVerse: verse,
+      fromChapter: chapter,
+      toVerse: verseEnd ? verseEnd : 0,
+    });
+    if (!result.ok) return false;
+    selectGameMode(gameMode, result.payload);
+    return true;
+  };
   return (
     <dataContext.Provider
       value={
@@ -196,6 +221,7 @@ export default function DataContextProvider(props: {
             pickChapter,
             pickVerse,
             showHint: gameStore.events.showHint,
+            fromURL,
           },
         } as IDataContext
       }

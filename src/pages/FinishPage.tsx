@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "../components/Button";
 import Page from "../components/Page";
@@ -13,6 +13,25 @@ export default function FinishPage() {
     appData.events.recite();
     history.push("/game");
   };
+
+  const getLink = async () => {
+    setHasCopiedLink(true);
+    await navigator.clipboard.writeText(
+      `https://memble.davidkwong.net/url?gm=${
+        appData.state.gameSettings.gameMode === "scholar" ? "s" : "c"
+      }&tm=${appData.state.gameSettings.lengthMode === "verse" ? "v" : "p"}&b=${
+        appData.state.gameSettings.fromBook
+      }&c=${appData.state.gameSettings.fromChapter}&v=${
+        appData.state.gameSettings.fromVerse
+      }${
+        appData.state.gameSettings.lengthMode === "passage"
+          ? `&ve=${appData.state.gameSettings.toVerse}`
+          : ""
+      }`
+    );
+  };
+
+  const [hasCopiedLink, setHasCopiedLink] = useState(false);
   const pickAnotherVerse = () => {
     appData.events.pickAnotherVerse();
     history.push("/");
@@ -47,6 +66,17 @@ export default function FinishPage() {
           </div>
           <div className={styles.sd}>
             <Button
+              onClick={getLink}
+              colorVariant="primary"
+              outlined
+              label={hasCopiedLink ? "copied" : "copy link to share"}
+              fullWidth
+              disabled={hasCopiedLink}
+              variant="medium"
+            />
+          </div>
+          <div className={styles.sd}>
+            <Button
               onClick={pickAnotherVerse}
               colorVariant="primary"
               label="pick another verse"
@@ -65,6 +95,17 @@ export default function FinishPage() {
               />
             </div>
           )}
+          <div className={styles.md}>
+            <Button
+              onClick={getLink}
+              colorVariant="primary"
+              outlined
+              label={hasCopiedLink ? "copied" : "copy link to share"}
+              disabled={hasCopiedLink}
+              fullWidth
+              variant="large"
+            />
+          </div>
 
           <div className={styles.md}>
             <Button

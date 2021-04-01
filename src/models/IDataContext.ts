@@ -37,7 +37,10 @@ export default interface IDataContext {
     showHint: () => void;
     shownChallengerHint: () => void;
     selectLengthMode: (mode: string) => void;
-    confirmTextSelect: () => Promise<boolean>;
+    confirmTextSelect: () => Promise<{
+      ok: boolean;
+      payload: IWord[][] | null;
+    }>;
     selectGameMode: (mode: string) => void;
     boardCleared: () => void;
     quit: () => void;
@@ -47,5 +50,13 @@ export default interface IDataContext {
     pickBook: (id: number) => void;
     pickChapter: (id: number) => void;
     pickVerse: (id: number) => void;
+    fromURL: (
+      textMode: string,
+      gameMode: string,
+      book: number,
+      chapter: number,
+      verse: number,
+      verseEnd?: number
+    ) => Promise<boolean>;
   };
 }
