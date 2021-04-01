@@ -1,0 +1,26 @@
+@import "./global.css";
+
+.card {
+  z-index: 2;
+  cursor: pointer;
+  position: fixed;
+  left: 50%;
+  top: 0px;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 52px;
+  color: var(--scholar);
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+@media (min-width: 768px) {
+  .text {
+    font-size: 36px;
+  }
+}

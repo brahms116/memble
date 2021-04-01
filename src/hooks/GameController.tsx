@@ -3,7 +3,7 @@ import { useState } from "react";
 import Cursor from "../components/Cursor";
 import Word from "../components/Word";
 import WordUIElements from "../components/WordUIElements";
-import IWord, { IWordUi } from "../models/IWord";
+import { IWordUi } from "../models/IWord";
 import IDataContext from "../models/IDataContext";
 import animateWords from "../utils/animateWordUtils";
 import Sleep from "../utils/Sleep";
@@ -16,7 +16,9 @@ export default function GameController(
   const [isAnimating, setIsAnimating] = useState(false);
   const [isCursorActive, setIsCursorActive] = useState(false);
   const [words, setWords] = useState<IWordUi[]>([]);
+  const [numIncorrect, setNumIncorrect] = useState(0);
   const [isCursorError, setCursorError] = useState(false);
+  const [isShowHint, setIsShowHint] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
   const history = useHistory();
   const elements = (
@@ -61,7 +63,8 @@ export default function GameController(
 
   const displayScholarHint = async (
     segmentIndex: number,
-    wordIndex: number
+    wordIndex: number,
+    shouldPersist = true
   ) => {
     setIsAnimating(true);
     let result: IWordUi[] = [];
@@ -99,7 +102,11 @@ export default function GameController(
       return [...prev];
     });
     setIsAnimating(false);
-    appData.events.shownScholarHint();
+    if (shouldPersist) appData.events.shownScholarHint();
+    else {
+      setIsShowHint(false);
+      setCursorError(false);
+    }
   };
 
   const clearBoard = async (semgmentIndex: number) => {
@@ -168,7 +175,8 @@ export default function GameController(
         !appData.state.game.isBoardCleared &&
         appData.state.game.currentSegmentIndex === 0 &&
         appData.state.game.currentWordIndex === 0 &&
-        appData.state.game.nextScholarSegment > 0
+        appData.state.game.nextScholarSegment > 0 &&
+        !isShowHint
       ) {
         clearBoard(appData.state.game.nextScholarSegment - 1);
       } else {
@@ -183,12 +191,20 @@ export default function GameController(
             !appData.state.game.initialHintShown &&
             appData.state.game.currentWordIndex === 0 &&
             appData.state.game.currentSegmentIndex ===
-              appData.state.game.nextScholarSegment
+              appData.state.game.nextScholarSegment &&
+            !isShowHint
           )
             displayScholarHint(
               appData.state.game.currentSegmentIndex,
               appData.state.game.currentWordIndex
             );
+        }
+        if (isShowHint) {
+          displayScholarHint(
+            appData.state.game.currentSegmentIndex,
+            appData.state.game.currentWordIndex,
+            false
+          );
         }
       }
     }
@@ -213,6 +229,7 @@ export default function GameController(
     appData.state.game.initialHintShown,
     appData.state.game.isBoardCleared,
     isAwaitingCover,
+    isShowHint,
   ]);
 
   const newLetter = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -220,14 +237,26 @@ export default function GameController(
     if (!isAnimating) {
       const result = appData.events.newLetter(e.currentTarget.value);
       setCursorError(!result);
+      if (!result) {
+        setNumIncorrect((prev) => prev + 1);
+      } else {
+        setNumIncorrect(0);
+      }
     }
   };
 
+  const showHint = () => {
+    setIsShowHint(true);
+    appData.events.showHint();
+    setNumIncorrect(0);
+  };
+
   return {
-    state: { isAnimating, elements, cursorRef },
+    state: { isAnimating, elements, cursorRef, numIncorrect },
     events: {
       updateCursorActive,
       newLetter,
+      showHint,
     },
   };
 }

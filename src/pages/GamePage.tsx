@@ -1,6 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useContext, useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
+import HintButton from "../components/HintButton";
 import Page from "../components/Page";
 import TopBar from "../components/TopBar";
 import { dataContext } from "../context/DataContext";
@@ -71,6 +72,18 @@ export default function GamePage() {
           gameController.state.isAnimating ? { opacity: 0 } : { opacity: 1 }
         }
       >
+        {appData.state.gameSettings.gameMode === "scholar" && (
+          <div
+            onClick={() => {
+              gameController.events.showHint();
+              focusOnInput();
+            }}
+          >
+            <HintButton
+              shouldShow={gameController.state.numIncorrect > 4}
+            ></HintButton>
+          </div>
+        )}
         <TopBar />
       </motion.div>
       <div className={styles.page}>

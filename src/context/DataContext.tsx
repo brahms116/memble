@@ -195,6 +195,7 @@ export default function DataContextProvider(props: {
             pickBook,
             pickChapter,
             pickVerse,
+            showHint: gameStore.events.showHint,
           },
         } as IDataContext
       }

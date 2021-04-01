@@ -112,6 +112,12 @@ export default function GameStore() {
   const shownHint = () => {
     setInitialHintShown(true);
   };
+
+  const showHint = () => {
+    setCurrentProgressionScore((prev) => prev - currentWordIndex);
+    setInputValue("");
+    setCurrentWordIndex(0);
+  };
   return {
     state: {
       inputValue,
@@ -134,6 +140,7 @@ export default function GameStore() {
       setWords,
       setTotalProgressionScore,
       resetAll,
+      showHint,
     },
   };
 }

@@ -34,6 +34,7 @@ export default interface IDataContext {
   events: {
     newLetter: (letter: string) => boolean;
     shownScholarHint: () => void;
+    showHint: () => void;
     shownChallengerHint: () => void;
     selectLengthMode: (mode: string) => void;
     confirmTextSelect: () => Promise<boolean>;
